@@ -1,0 +1,57 @@
+{% unless customer %}
+<script type="text/javascript">
+    window.location = "/account/login";
+</script>
+{% endunless %}
+<div id="customer">
+
+<div class="sixteen columns clearfix collection_nav">
+  <h1 class="collection_title">
+    {{ page.title }}
+  </h1>
+</div>
+<div id="customer">
+  
+  <div class="container">
+  {% if customer %}  
+  {% paginate customer.orders by 50 %}
+    {% paginate collections.programs.products by 48 %}
+         {% if customer %}
+      {% if customer.orders.size != 0 %}
+         {% for product in collections.programs.products %}
+          
+           
+             {% capture order_items %}
+              {% for order in customer.orders %}
+               {% for line_item in order.line_items %}
+                {{ line_item.product_id }}
+               {% endfor %}
+              {% endfor %}
+             {% endcapture %}
+             {% if order_items contains product.id %}
+              {% include 'product-thumbnail-program' %}
+             {% else %}
+                
+             {% endif %}
+           
+          
+          
+         {% endfor %}
+      {% else %}
+          <h3>You haven't purchased any programs yet!</h3>
+          <a href="/collections/programs" class="action_button">See Programs</a>
+           {% endif %}
+      	 {% else %}
+      		<h3>Please <a href="/account/login">Login</a> to your account to view your purchased videos</h3>     
+          {% endif %}
+         {% include 'pagination' %}
+       {% endpaginate %}
+  {% endpaginate %}
+    {% endif %}
+</div>
+</div>
+<div class="sixteen columns page">
+  {% include 'page-multi-column', content: page.content %}
+</div>
+</div>
+

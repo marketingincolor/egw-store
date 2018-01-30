@@ -1,0 +1,316 @@
+</div>
+</div>
+<div class="hero-banner hero--size-down-challenge {% if collection.title contains 'Little Black Dress' %}hero--lbd{% endif %} {% if handle contains 'gentlemen-restart' %}hero--grye{% endif %}">
+  <div class="hero-caption container">
+  {% if collection.title contains 'Little Black Dress' %}
+    <img src="{{ 'lbd-logo.svg' | asset_url }}" class="hero-icon" />
+    {% elsif handle contains '28-day' %}
+  <img src="{{ '28-day-icon.png' | asset_url }}" class="hero-icon" />
+    {% else %}
+    <img src="{{ 'grye-icon.png' | asset_url }}" class="hero-icon" />
+    {% endif %}
+</div>
+</div>
+<div class="day-navigation">
+  {% include 'day-navigation-bar' %}
+</div>
+
+<div class="container" style="padding-top:0px;">
+  <h1>Videos</h1>
+  {% for link in linklists[collection.handle].links %}
+  {% assign collection = link.object %}
+<div class="day-card card-wrapper-x-top">
+   
+<div class="week-row">
+  <div class="card-header">
+   <h2>{{ link.title }}</h2> 
+     {% if link.title == 'Week 1' %}
+    	{% assign menus_navigation = handle | append: '-week-1'  %}
+    {% endif %}
+    
+    {% if link.title == 'Week 2' %}
+        {% assign menus_navigation = handle | append: '-week-2'  %}
+    {% endif %}
+    
+    {% if link.title contains 'Week 3' %}
+    	{% assign menus_navigation = handle | append: '-week-3'  %}
+    {% endif %}
+    
+    {% if link.title == 'Week 4' %}
+        {% assign menus_navigation = handle | append: '-week-4'  %}
+    {% endif %}
+    
+    {% for link in linklists[menus_navigation].links %}
+  		<span class="groceries-link"><a href="{{ link.url }}" target="_blank">{{ link.title }}</a></span>
+    {% endfor %}
+  </div>
+  
+  {% for product in collection.products %}
+  
+  {% assign completed_this = false %}
+  {% for tag in customer.tags %}		
+  	{% assign product_title = product.title | prepend: 'Completed ' %}
+  	{% if tag contains product_title %}
+  		{% assign completed_this = true %}
+  	{% endif %}
+  {% endfor %}
+  
+  
+  <div class="calendar--day no-bg-border {% if customer and completed_this %}calendar--day-completed{% else %}calendar--day-not-completed{% endif %} {% if product.tags contains 'Rest Day' %}rest-day-block{% endif %}">
+   
+      <h4>{{ product.title | split: '| ' | last }} {% if product.tags contains 'Rest Day' %} - <b>Rest Day</b>{% endif %}</h4> 
+      {% unless product.description contains 'Rest Day' %}
+      {% include 'completed-check' %}
+      
+      <div class="play-caption" id="">
+      {% if customer.tags contains 'Accepted Disclaimer' %}
+      <a href="#full_video_{{product.id }}" class="fancybox play-btn-anchor full_video_{{ product.id }}"></a>
+       {% else %}
+        <a href="#disclaimer-modal" id="disclaimer" class="fancybox play-btn-anchor"></a>
+        {% endif %}
+      <div class="play-btn">
+        
+      <i class="fa fa-play"></i>
+        </div>
+      </div>
+      {% endunless %}
+      {% if product.tags contains 'Rest Day' %}
+      <a href="{{ product.url }}">
+      {% endif %}
+      <img src="{% if product.images.size > 0 %}{{ product.featured_image | img_url: '300x' }}{% else %}{% cycle 'https://cdn.shopify.com/s/files/1/2423/0213/files/calendar-promo-1_2048x.jpg?v=1509124965', 'https://cdn.shopify.com/s/files/1/2423/0213/files/calendar-promo-2_2048x.jpg?v=1509124984', 'https://cdn.shopify.com/s/files/1/2423/0213/files/calendar-promo-3_2048x.jpg?v=1509125125', 'https://cdn.shopify.com/s/files/1/2423/0213/files/calendar-promo-3_2048x.jpg?v=1509125125', 'https://cdn.shopify.com/s/files/1/2423/0213/files/calendar-promo-2_2048x.jpg?v=1509124984' %}{% endif %}" style="width:100%;"/>
+      {% if product.tags contains 'Rest Day' %}
+      </a>
+      {% endif %}
+      {% unless product.tags contains 'Rest Day' %}
+      <ul class="video-nav">
+        {% if customer.tags contains 'Accepted Disclaimer' %}
+          <li><a href="#video_{{ product.id }}" class="fancybox video_{{ product.id }}">Preview</a></li>
+<li><a href="#warmup_{{ product.id }}" class="fancybox warmup_{{ product.id }}">Warm Up</a></li>
+<li><a href="#warmdown_{{ product.id }}" class="fancybox cooldown_{{ product.id }}">Warm Down</a></li>
+<li><a href="#stretch_{{ product.id }}" class="fancybox stretch_{{ product.id }}">Stretch</a></li>
+<li><a href="{{ product.metafields.c_f.day_menu }}" target="_blank">Menu</a></li>
+<div style="display:none">
+  <div id="full_video_{{ product.id }}" class="video-modal">
+    <div class="video-container">
+
+    </div>
+  </div>
+</div>
+<div style="display:none">
+  <div id="video_{{ product.id }}" class="video-modal">
+    <div class="video-container">
+
+    </div>
+  </div>
+</div>
+<div style="display:none">
+  <div id="stretch_{{ product.id }}" class="video-modal">
+    <div class="video-container">
+
+    </div>
+  </div>
+</div>
+<div style="display:none">
+  <div id="warmup_{{ product.id }}" class="video-modal">
+    <div class="video-container">
+
+    </div>
+  </div>
+</div>
+<div style="display:none">
+  <div id="warmdown_{{ product.id }}" class="video-modal">
+    <div class="video-container">
+
+    </div>
+  </div>
+</div>
+<script>
+  $(document).ready(function(){
+    $('.full_video_{{ product.id }}').on('click', function(){
+      setTimeout(function(){
+      $('#full_video_{{ product.id }} .video-container').append('<iframe src="{{ product.metafields.c_f.day_full_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>')
+
+        },0500);
+    });
+    $('.stretch_{{ product.id }}').on('click', function(){
+      setTimeout(function(){
+      $('#stretch_{{ product.id }} .video-container').append('<iframe src="{{ product.metafields.c_f.day_stretch_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>')
+
+        },0500);
+    });
+    $('.video_{{ product.id }}').on('click', function(){
+      setTimeout(function(){
+      $('#video_{{ product.id }} .video-container').append('<iframe src="{{ product.metafields.c_f.day_overview_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>')
+
+        },0500);
+    });
+    $('.warmup_{{ product.id }}').on('click', function(){
+      setTimeout(function(){
+      $('#warmup_{{ product.id }} .video-container').append('<iframe src="{{ product.metafields.c_f.day_warm_up_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>')
+
+        },0500);
+    });
+    $('.cooldown_{{ product.id }}').on('click', function(){
+      setTimeout(function(){
+      $('#warmdown_{{ product.id }} .video-container').append('<iframe src="{{ product.metafields.c_f.day_warm_down_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>')
+
+        },0500);
+    });
+  });
+</script>
+        {% else %}
+        <li><a href="#disclaimer-modal" id="disclaimer" class="fancybox">Preview</a></li>
+        <li><a href="#disclaimer-modal" id="disclaimer" class="fancybox">Warm Up</a></li>
+        <li><a href="#disclaimer-modal" id="disclaimer" class="fancybox">Warm Down</a></li>
+        <li><a href="#disclaimer-modal" id="disclaimer" class="fancybox">Stretch</a></li>
+        <li><a href="{{ product.metafields.c_f.day_menu }}" target="_blank">Menu</a></li>
+        {% endif %}
+       </ul> 
+      {% endunless %}
+ 
+  </div>
+ 
+  
+ {% endfor %}
+  </div>
+</div>
+  {% endfor %}
+</div>
+  
+
+  
+{% unless customer.tags contains 'Accepted Disclaimer' %}
+	{% include 'disclaimer-box' %}
+{% endunless %}
+  
+{% schema %}
+
+{
+  "name": "Collection",
+  "class": "collection-template-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner",
+      "label": "Description Banner"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "pagination_limit",
+      "label": "Products per page",
+      "min": 2,
+      "max": 50,
+      "step": 1,
+      "default": 48
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "display_collection_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_sort",
+      "label": "Enable collection sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_tags",
+      "label": "Enable filtering by product tag"
+    },
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "paragraph",
+      "content": "Create a sidebar by adding content blocks."
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle",
+      "label": "Toggle sidebar content",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_by_tag",
+      "name": "Tag list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_collection",
+      "name": "Collection list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_type",
+      "name": "Type list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_vendor",
+      "name": "Vendor list",
+      "limit": 1
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "custom_menu_linklist",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Text area can be used for special announcements or general information.</p>"
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": "Page",
+      "settings": [
+        {
+          "type": "page",
+          "id": "content_page",
+          "label": "Page"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

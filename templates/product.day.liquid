@@ -1,0 +1,73 @@
+
+{% if customer %}
+{% if customer.orders.size != 0 %}
+
+{% capture order_items %}{% for order in customer.orders %}{% for line_item in order.line_items %}{% for tag in line_item.product.tags %}{% if tag contains 'Program: ' %}]{{ tag }}{% endif %}{% endfor %}{% endfor %}{% endfor %}{% endcapture %}
+
+  {% else %}
+
+  {% endif %}
+{% else %} 
+
+{% endif %}
+
+{% if customer %}
+  
+  {% if customer.orders.size != 0 %}
+
+	  {% assign has_access = false %}
+		
+		{% for tag in product.tags %}
+		 {% if tag contains 'Program: ' %}
+			{% if order_items contains tag %}
+               {% assign has_access = true %}
+            {% endif %}
+		 {% endif %}
+		{% endfor %}
+          
+	
+  {% endif %}
+{% endif %}
+
+{% comment %}
+  The contents of the product.liquid template can be found in /sections/product-template.liquid
+{% endcomment %}
+{% if has_access or customer.tags contains 'ALL ACCESS' %}
+{% section 'product-template-day' %}
+{% if handle contains '28-day-size-down-challenge' %}
+{% if product.title contains 'Day 28' %}
+
+{% section '28-bottom-promotions' %}
+
+
+{% endif %}
+{% else %}
+{% if product.title contains 'Day 14' and handle contains 'little-black' %}
+	{% section 'lbd-bottom-promotions' %}
+{% elsif product.title contains 'Day 14' and handle contains 'gentlemen' %}
+{% section 'grye-bottom-promotions-14' %}
+{% endif %}
+{% endif %}
+<div class="container">
+<div class="sixteen columns">
+  <div class="day-quote">
+    {% if product.metafields.c_f.day_quote contains '– ' %}
+    {{ product.metafields.c_f.day_quote | split: '" – ' | first | append: '"' }}
+    <div class="person">
+          &mdash; {{ product.metafields.c_f.day_quote | split: '" – ' | last }}
+
+    </div>
+    {% else %}
+     {{ product.metafields.c_f.day_quote | split: '–' | first | append: '' }}
+    <div class="person">
+          &mdash; {{ product.metafields.c_f.day_quote | split: '–' | last }}
+
+    </div>
+    {% endif %}
+  </div>
+</div>
+</div>
+<div class="container content" style="padding:0px !important;">
+{% else %}
+{% include 'access-check' %}
+{% endif %}

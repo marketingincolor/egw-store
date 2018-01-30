@@ -1,0 +1,164 @@
+<form id="foo" method="post" action="/" style="display:none;">
+  <input id="bar" name="tags" type="text" value="{% for tag in customer.tags %}{{ tag }}{% unless forloop.last %}, {% endunless %}{% endfor %}" />
+  <input type="submit" />  
+</form>
+<script type="text/javascript"> 
+  $(document).ready(function(){
+        $(function(){
+           var currentTags = [{% for tag in customer.tags %}'{{ tag }}', {% endfor %}];
+          
+          $('.completed-day-check.checkbox').on('change',function(){
+            var completedDay = $(this).val();
+           
+            
+            
+            var found = jQuery.inArray(completedDay, currentTags);
+            if (found >= 0) {
+                // Element was found, remove it.
+                currentTags.splice(found, 1);
+              
+               var newRemovedTags = currentTags.join(", ");
+              
+                $('#bar').val(newRemovedTags);
+              
+              console.log(completedDay+' is in the array so remove it.')
+              
+            } else {
+                // Element was not found, add it.
+                currentTags.push(completedDay);
+              
+                 var newTags = currentTags.join(", ");
+              
+                $('#bar').val(newTags);
+              
+              	console.log(newTags);
+              
+              console.log(completedDay+' is NOT in the array so add it.')
+            }
+
+            setTimeout(function(){ 
+            	$('#foo').submit();
+            },0500);
+            	
+            });
+          
+            $('.i-accept').on('click',function(){
+            if (!$(this).hasClass('disabled_button')) {
+            var completedDay = $('#disclaimer-check').val();
+           
+            
+            
+            var found = jQuery.inArray(completedDay, currentTags);
+            if (found >= 0) {
+                // Element was found, remove it.
+                currentTags.splice(found, 1);
+              
+               var newRemovedTags = currentTags.join(", ");
+              
+                $('#bar').val(newRemovedTags);
+              
+              console.log(completedDay+' is in the array so remove it.')
+              
+            } else {
+                // Element was not found, add it.
+                currentTags.push(completedDay);
+              
+                 var newTags = currentTags.join(", ");
+              
+                $('#bar').val(newTags);
+              
+              	console.log(newTags);
+              
+              console.log(completedDay+' is NOT in the array so add it.')
+            }
+
+            setTimeout(function(){ 
+            	$('#foo').submit();
+            },0500);
+              
+            }
+            	
+            });
+          
+          	
+            
+        });
+    
+  });
+   
+  // Variable to hold request
+var request;
+
+// Bind to the submit event of our form
+$("#foo").submit(function(event){
+
+    // Prevent default posting of form - put here to work in case of errors
+    event.preventDefault();
+  
+    
+
+    // Abort any pending request
+    if (request) {
+        request.abort();
+    }
+  
+    var updatedTags = $('#bar').val();
+    
+    // setup some local variables
+    var $form = $(this);
+		
+    // Let's select and cache all the fields
+    var $inputs = $form.find("input, select, button, textarea");
+    
+    // Serialize the data in the form
+    var serializedData = $form.serialize();
+
+    // Let's disable the inputs for the duration of the Ajax request.
+    // Note: we disable elements AFTER the form data has been serialized.
+    // Disabled form elements will not be serialized.
+    //$inputs.prop("disabled", true);
+	
+  	
+
+  	
+    // Fire off the request to /form.php
+    request = $.ajax({
+      url: "https://marketingincolor.com/apps/ssfields.php?id={{customer.id}}",
+        type: "post",
+        data: serializedData,
+        beforeSend: function() {
+      $('.disclaimer-buttons a, .completed-check').hide();
+      $('.rtx-preloader-small').show();
+        }
+    });
+  
+    console.log(serializedData);
+
+    // Callback handler that will be called on success
+    request.done(function (response, textStatus, jqXHR){
+        // Log a message to the console
+        console.log("Hooray, it worked!");
+        console.log(textStatus);
+        window.location.href = window.location.href.replace( /[\?#].*|$/, "?dayupdated" );
+    });
+
+    // Callback handler that will be called on failure
+    request.fail(function (jqXHR, textStatus, errorThrown){
+        // Log the error to the console
+        console.error(
+            "The following error occurred: "+
+            textStatus, errorThrown
+        );
+    });
+
+    // Callback handler that will be called regardless
+    // if the request failed or succeeded
+    request.always(function () {
+        // Reenable the inputs
+        $inputs.prop("disabled", false);
+    });
+    
+
+
+});
+</script>

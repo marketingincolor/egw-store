@@ -1,0 +1,66 @@
+<a href="#preview" class="fancybox action_button small_button preview-video">Preview</a>
+        <a href="#warmup" class="fancybox action_button small_button warmup-video">Warm Up</a>
+        <a href="#warmdown" class="fancybox action_button small_button warmdown-video">Warm Down</a>
+        <a href="#stretch" class="fancybox action_button small_button stretch-video">Stretch</a>
+        <div style="display:none">
+          <div id="video-overview">
+            <iframe src="{{ product.metafields.c_f.day_overview_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+          </div>
+        </div>
+      <div style="display:none">
+        <div id="preview" class="video-modal">
+        <div class="video-container">
+          
+        </div>
+        </div>
+      </div>
+      <div style="display:none">
+        <div id="warmup" class="video-modal">
+        <div class="video-container">
+          
+        </div>
+        </div>
+      </div>
+      <div style="display:none">
+        <div id="warmdown" class="video-modal">
+        <div class="video-container">
+          
+        </div>
+        </div>
+      </div>
+        <div style="display:none">
+        <div id="stretch" class="video-modal">
+        <div class="video-container">
+          
+        </div>
+        </div>
+      </div>
+        <script>
+        $(document).ready(function(){
+         
+          $('.preview-video').on('click', function(){
+            setTimeout(function(){
+            $('#preview .video-container').append('<iframe src="{{ product.metafields.c_f.day_overview_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>')
+            
+              },0500);
+          });
+          $('.stretch-video').on('click', function(){
+            setTimeout(function(){
+            $('#stretch .video-container').append('<iframe src="{{ product.metafields.c_f.day_stretch_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>')
+            
+              },0500);
+          });
+          $('.warmup-video').on('click', function(){
+            setTimeout(function(){
+            $('#warmup .video-container').append('<iframe src="{{ product.metafields.c_f.day_warm_up_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>')
+            
+              },0500);
+          });
+          $('.warmdown-video').on('click', function(){
+            setTimeout(function(){
+            $('#warmdown .video-container').append('<iframe src="{{ product.metafields.c_f.day_warm_down_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>')
+            
+              },0500);
+          });
+        });
+      </script>

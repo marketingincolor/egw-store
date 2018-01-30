@@ -1,0 +1,46 @@
+{% if customer %}
+  {% if customer.orders.size != 0 %}
+    {% capture order_items %}{% for order in customer.orders %}{% for line_item in order.line_items %}{% for tag in line_item.product.tags %}{% if tag contains 'Program: ' %}{{ tag | split: 'Program: ' | last }}{% endif %}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endfor %}{% endfor %}{% endcapture %}
+
+  {% else %}
+
+  {% endif %}
+{% else %} 
+
+{% endif %}
+
+{% if customer %}
+  
+  {% if customer.orders.size != 0 %}
+  
+	  {% assign has_access = false %}
+	  {% assign page_title = page.title | split: ' | ' | first %}
+        {% if order_items contains page_title %}
+        	{% assign has_access = true %}
+        {% endif %}
+    
+      
+  {% endif %}
+{% endif %}
+
+
+
+</div>
+{% if has_access %}
+{% section '28-day-jaime' %}
+{% else %}
+{% include 'access-check' %}
+{% endif %}
+<style>
+  .homepage_slider .slides>li:first-of-type {
+    display: block;
+    min-height: 30vh;
+}
+  
+  .homepage_slider .slides img, .article .slides img {
+    width: 400px;
+    margin-bottom: 0;
+    padding: 40px 0;
+    float: left;
+}
+</style>

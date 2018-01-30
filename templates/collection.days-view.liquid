@@ -1,0 +1,33 @@
+{% if customer %}
+  {% if customer.orders.size != 0 %}
+    {% capture order_items %}{% for order in customer.orders %}{% for line_item in order.line_items %}{% for tag in line_item.product.tags %}{% if tag contains 'Program: ' %}{{ tag | split: 'Program: ' | last }}{% endif %}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endfor %}{% endfor %}{% endcapture %}
+
+  {% else %}
+
+  {% endif %}
+{% else %} 
+
+{% endif %}
+
+{% if customer %}
+  
+  {% if customer.orders.size != 0 %}
+  
+	  {% assign has_access = false %}
+	  {% assign collection_title = collection.title | split: ' | ' | first | remove: ',' %}
+        {% if order_items contains collection_title %}
+        	{% assign has_access = true %}
+        {% endif %}
+    
+      
+  {% endif %}
+{% endif %}
+
+
+{% if has_access or customer.tags contains 'ALL ACCESS' %}
+{% section 'collection-days-template' %}
+{% else %}
+{% include 'access-check' %}
+{% endif %}
+
+

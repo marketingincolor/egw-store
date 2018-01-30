@@ -1,0 +1,169 @@
+</div>
+</div>
+<div id="customer" class="access-message">
+<div class="container">
+<div class="eight columns alpha access-block">
+  <h3 class="">We Apologize!</h3>
+  <p style="padding-right:5px;">You must have an account to access this page. If you’d like to create one by purchasing a program, 
+    <a href="/collections/all-programs"> please visit us here.</a>
+  </p>
+  </div>
+  <div class="eight columns omega">
+  
+    
+    <div id="login_form">
+      <h3 class="customer-title main-title">Already have an account? Please sign in below.</h3>
+
+      <br class="clear" />
+      {% form 'customer_login' %}
+      {% if template contains 'product' %}
+      <input type="hidden" name="checkout_url" value="{{ product.url }}" />
+      {% elsif template contains 'collection' %}
+      <input type="hidden" name="checkout_url" value="{{ collection.url }}" />
+      {% elsif template contains 'page' %}
+      <input type="hidden" name="checkout_url" value="{{ page.url }}" />
+      {% endif %}
+      {{ form.errors | default_errors }}
+      <label></label>
+
+      <input type="email" value="" name="customer[email]" id="customer_email" class="large" size="30"  autocorrect="off" autocapitalize="off" tabindex="1" placeholder="Email" />
+
+      {% if form.password_needed %}
+
+      {% comment %}
+      Customer Account Login
+      {% endcomment %}
+
+      <input type="password" value="" name="customer[password]" id="customer_password" class="large password" size="16" tabindex="2" placeholder="Password" />
+
+      {% endif %}
+
+
+      {% unless shop.checkout.guest_login %}
+      <p class="left" style="padding-top: 8px;">
+        <small><a href="#" onclick="showRecoverPasswordForm()" style="padding-right:10px">{{ 'customer.login.forgot_password' | t }}</a></small>
+      </p>
+      {% endunless %}
+      <br>
+      <input class="btn action_button" type="submit" value="Login" style="margin-bottom: 5px !important;width:100%;float:left;" tabindex="3" />
+
+      {% endform %}
+
+      <div id="create-customer" style="max-width:90%">
+        
+      </div><!-- /#create-customer -->
+
+      {% if shop.checkout.guest_login %}
+      <span class="or"> {{ 'customer.login.or' | t }} </span>
+      {% form 'guest_login' %}
+      <input class="guest_button" type="submit" value="{{ 'customer.login.guest_title_html' | t }}" />
+      {% endform %}
+      {% endif %}
+    </div>
+    <div id="recover-password" style='display:none'>
+      <div class="six columns">
+
+        <h2 class="customer-title">{{ 'customer.recover_password.title' | t }}</h2>
+
+        {% form 'recover_customer_password' %}
+        {{ form.errors | default_errors }}
+
+        {% if form.posted_successfully? %}
+        {% assign reset_success = true %}
+        {% endif %}
+
+        <div id="recover_email" class="clearfix large_form">
+          <label for="email" class="large">{{ 'customer.recover_password.email' | t }}</label>
+          <input type="email" value="" size="30" name="email" id="recover-email" class="large" autocorrect="off" autocapitalize="off" />
+        </div>
+
+        <p>
+          <em class="note">{{ 'customer.recover_password.subtext' | t }}</em>
+        </p>
+
+        <div class="action_bottom">
+          <input class="btn action_button" type="submit" value="{{ 'customer.recover_password.submit' | t }}" />
+          <span class="note">{{ 'customer.recover_password.or' | t }} <a href="#" onclick="hideRecoverPasswordForm()">{{ 'customer.recover_password.cancel' | t }}</a></span>
+        </div>
+        {% endform %}
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'block';
+    document.getElementById('login_form').style.display='none';
+    return false;
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    document.getElementById('login_form').style.display = 'block';
+    return false;
+  }
+
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success %}
+  showRecoverPasswordForm();
+  {% endif %}
+
+  $(document).ready(function () {
+    if(window.location.href.indexOf("checkout_url") > -1) {
+      $('#login_form').hide();
+      $('.register-link').show();
+      $('.register-regular-link').hide();
+      $('#new-account').show();
+      $('#login_form .customer-title.main-title').addClass('for-checkout');
+      $('#new-account .customer-title.main-title').text('<b>New Customer:</b> Enter your information below');
+      $('#new-account form').prepend('<input type="hidden" name="return_to" value="/checkout" />');
+      $('#create-customer form').prepend('<input type="hidden" name="return_to" value="/checkout" />');
+      $('#login_form .customer-title.main-title').text('<b>Returning Customer:</b> Login to proceed');
+      $('#login_form form').prepend('<input type="hidden" name="return_to" value="/checkout" />');
+
+      $('.login-link, .register-link').attr('href', '#!');
+
+      $('.login-link').click(function(){
+        $('#new-account').hide();
+        $('#login_form').show();
+
+      });
+
+      $('.register-link').click(function(){
+        $('#login_form').hide();
+        $('#new-account').show();
+
+      });
+
+
+
+
+      function checkPasswordMatch() {
+        var password = $("#passwordFirst").val();
+        var confirmPassword = $("#passwordConfirm").val();
+        if (password != confirmPassword) {
+          $('.password-match').fadeIn("slow");
+          $('#registerBtn').addClass('disabled-btn');
+          $('#registerBtn').prop('disabled' , true);
+        }  else {
+          $('.password-match').fadeOut("slow");
+          $('#registerBtn').removeClass('disabled-btn');
+          $('#registerBtn').prop('disabled' , false);
+        }
+      }
+
+      $(document).ready(function () {
+        $("#passwordFirst, #passwordConfirm").keyup(checkPasswordMatch);
+      });
+
+
+
+
+
+    }
+  });
+</script>
+<div class="container content">

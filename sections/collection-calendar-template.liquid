@@ -1,0 +1,335 @@
+</div>
+</div>
+<div class="hero-banner hero--size-down-challenge {% if collection.title contains 'Little Black Dress' %}hero--lbd{% endif %} {% if handle contains 'gentlemen-restart' %}hero--grye{% endif %}">
+  <div class="hero-caption container">
+  {% if collection.title contains 'Little Black Dress' %}
+    <img src="{{ 'lbd-logo.svg' | asset_url }}" class="hero-icon" />
+    {% elsif handle contains '28-day' %}
+  <img src="{{ '28-day-icon.png' | asset_url }}" class="hero-icon" />
+    {% else %}
+    <img src="{{ 'grye-icon.png' | asset_url }}" class="hero-icon" />
+    {% endif %}
+</div>
+</div>
+<div class="day-navigation">
+  {% include 'day-navigation-bar' %}
+</div>
+{% unless collection.handle contains '-week' %}
+<div class="container x-bottom-padding calendar-description">
+  <div class="sixteen columns">
+  <div class="ten columns alpha calendar-heading fluid-column-block">
+    {{ collection.description }}
+    {% if handle contains '28-day-size-down-challenge' %}
+    <a href="/pages/28-day-size-down-challenge-quick-start-guide" class="action_button">View Quick Start Guide</a>
+    {% elsif handle contains 'little-black' %}
+    <a href="/pages/little-black-dress-quick-start-guide" class="action_button">View Quick Start Guide</a>
+    {% else %}
+    <a href="/pages/gentlemen-restart-your-engines-quick-start-guide" class="action_button">View Quick Start Guide</a>
+    {% endif %}
+  </div>
+  <div class="six columns omega fluid-column-block">
+    <div class="calendar-banner">
+    <img src="{{ collection.image | img_url: '700x' }}" />
+    </div>
+  </div>
+  </div>
+</div>
+{% endunless %}
+<div class="container" style="padding-top:0px;">
+  <div class="sixteen columns">
+<div class="day-card card-wrapper-x-top">
+  <div class="card-header">
+
+  <div class="twelve columns alpha">
+    <h1>{% if collection.handle contains '-week'%}{{ collection.title | remove: 'Little Black Dress | ' |  remove: '28-Day Size Down Challenge | ' }}{% else %}{{ collection.title | remove: 'Size Down'  | remove: '| Calendar' }} Calendar{% endif %}</h1>
+  </div>
+  <div class="four columns omega">
+    {% if handle contains '28-day' %}
+    {% assign program_collection = '28-day-size-down-challenge' %}
+    <select class="day-selector">
+      <option selected disabled>CHOOSE A DAY</option>
+      {% for product in collections[program_collection].products %}
+      <option value="{{ product.url }}">{{ product.title | split: '| ' | last }}</option>
+      {% endfor %}
+    </select>
+    {% elsif handle contains 'little' %}
+    {% assign program_collection = 'little-black-dress' %}
+    <select class="day-selector">
+      <option selected disabled>CHOOSE A DAY</option>
+      {% for product in collections[program_collection].products %}
+      <option value="{{ product.url }}">{{ product.title | split: '| ' | last }}</option>
+      {% endfor %}
+    </select>
+    {% else %}
+    {% assign program_collection = 'gentlemen-restart-your-engines' %}
+    <select class="day-selector">
+      <option selected disabled>CHOOSE A DAY</option>
+      {% for product in collections[program_collection].products %}
+      <option value="{{ product.url }}">{{ product.title | split: '| ' | last }}</option>
+      {% endfor %}
+    </select>
+    {% endif %}
+
+    </div>
+</div>
+<div class="week-row">
+  
+    
+{% for product in collection.products %}
+  {% assign completed_this = false %}
+    {% for tag in customer.tags %}
+		
+		{% assign product_title = product.title | prepend: 'Completed ' %}
+	
+    	{% if tag contains product_title %}
+    		{% assign completed_this = true %}
+    	{% endif %}
+    {% endfor %}
+  
+  <div class="calendar--day {% if customer and completed_this %}calendar--day-completed{% else %}calendar--day-not-completed{% endif %}">
+    <a href="{{ product.url }}">
+      <span class="day-title">Day</span>
+      <span class="day-number">{{ product.title | split: '| Day ' | last }}</span>
+      
+    </a>
+    {% include 'completed-check-day' %}
+  </div>
+    {% cycle '','','','','','', '</div><div class="week-row">' %}
+{% endfor %}
+  </div>
+</div>
+
+{% if collection.handle contains '-week' %}
+
+<div class="day-card day-card-2">
+  {% if handle contains 'little-black' %}
+  <div class="five columns alpha" style="background-image:url({% if collection.handle contains 'week-1'%}
+            {% assign reflections_handle = 'little-black-dress-day-1' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+            {% if collection.handle contains 'week-2'%}
+           {% assign reflections_handle = 'little-black-dress-day-8' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+           {% if collection.handle contains 'week-3'%}
+           {% assign reflections_handle = '28-day-size-down-challenge-day-15' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+           {% if collection.handle contains 'week-4'%}
+           {% assign reflections_handle = '28-day-size-down-challenge-day-22' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %})" />
+  </div>
+  
+    {% else %}
+    <div class="five columns alpha" style="background-image:url({% if collection.handle contains 'week-1'%}
+            {% assign reflections_handle = '28-day-size-down-challenge-day-1' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+            {% if collection.handle contains 'week-2'%}
+           {% assign reflections_handle = '28-day-size-down-challenge-day-8' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+           {% if collection.handle contains 'week-3'%}
+           {% assign reflections_handle = '28-day-size-down-challenge-day-15' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+           {% if collection.handle contains 'week-4'%}
+           {% assign reflections_handle = '28-day-size-down-challenge-day-22' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %})" />
+  </div>
+    {% endif %}
+  {% if handle contains '28-day' %}
+  <div class="eleven columns omega">
+    <div class="self-reflection-content">
+    		{% if collection.handle contains 'week-1'%}
+    
+    		<h4>Week 1 Self-Reflection</h4>
+    		{% assign reflections_handle = '28-day-size-down-challenge-day-1' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/28-day-size-down-challenge-week-1-self-reflection" class="action_button">View Self-Reflection</a>
+           {% endif %}
+       		{% if collection.handle contains 'week-2'%}           
+            <h4>Week 2 Self-Reflection</h4>
+    		{% assign reflections_handle = '28-day-size-down-challenge-day-8' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/28-day-size-down-challenge-week-2-self-reflection" class="action_button">View Self-Reflection</a>
+    	
+           {% endif %}
+           {% if collection.handle contains 'week-3'%}
+           <h4>Week 3 Self-Reflection</h4>
+    		{% assign reflections_handle = '28-day-size-down-challenge-day-15' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/28-day-size-down-challenge-week-3-self-reflection" class="action_button">View Self-Reflection</a>
+           {% endif %}
+           {% if collection.handle contains 'week-4'%}
+           <h4>Week 4 Self-Reflection</h4>
+    		{% assign reflections_handle = '28-day-size-down-challenge-day-22' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/28-day-size-down-challenge-week-4-self-reflection" class="action_button">View Self-Reflection</a>
+           {% endif %} 
+  </div>
+  </div>
+  {% else %}
+  <div class="eleven columns omega">
+    <div class="self-reflection-content">
+    		{% if collection.handle contains 'week-1'%}
+    
+    		<h4>Week 1 Self-Reflection</h4>
+    		{% assign reflections_handle = 'little-black-dress-day-1' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/little-black-dress-week-1-self-reflection" class="action_button">View Self-Reflection</a>
+           {% endif %}
+       		{% if collection.handle contains 'week-2'%}           
+            <h4>Week 2 Self-Reflection</h4>
+    		{% assign reflections_handle = 'little-black-dress-day-8' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/little-black-dress-week-2-self-reflection" class="action_button">View Self-Reflection</a>
+    	
+           {% endif %}
+           
+  </div>
+  </div>
+  {% endif %}
+  </div>
+
+{% endif %}
+    
+{% schema %}
+
+{
+  "name": "Collection",
+  "class": "collection-template-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner",
+      "label": "Description Banner"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "pagination_limit",
+      "label": "Products per page",
+      "min": 2,
+      "max": 50,
+      "step": 1,
+      "default": 48
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "display_collection_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_sort",
+      "label": "Enable collection sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_tags",
+      "label": "Enable filtering by product tag"
+    },
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "paragraph",
+      "content": "Create a sidebar by adding content blocks."
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle",
+      "label": "Toggle sidebar content",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_by_tag",
+      "name": "Tag list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_collection",
+      "name": "Collection list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_type",
+      "name": "Type list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_vendor",
+      "name": "Vendor list",
+      "limit": 1
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "custom_menu_linklist",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Text area can be used for special announcements or general information.</p>"
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": "Page",
+      "settings": [
+        {
+          "type": "page",
+          "id": "content_page",
+          "label": "Page"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

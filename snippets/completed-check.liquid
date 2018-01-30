@@ -1,0 +1,42 @@
+{% include 'small-loader' %}
+{% if template contains 'product' %}
+{% include 'share-completion' %}
+{% endif %}
+<div class="completed-check">
+    {% assign completed_this = false %}
+    {% for tag in customer.tags %}
+		
+		{% assign product_title = product.title | prepend: 'Completed ' %}
+	
+    	{% if tag contains product_title %}
+    		{% assign completed_this = true %}
+    	{% endif %}
+    {% endfor %}
+    {% if customer and completed_this %}
+    <div class="pretty p-svg p-plain left">
+      <input type="checkbox" class="checkbox completed-day-check" checked value="Completed {{ product.title }}">
+        <div class="state">
+            <i class="fa fa-check-square svg" aria-hidden="true"></i>
+            <label class="completion">Completed</label>
+
+        </div>
+      </div>
+    {% else %}
+  {% if handle contains 'videos' %} 
+  <div class="completed-tooltip">
+    <div class="tooltip-inner">
+      Mark as Completed
+    </div>
+  </div>
+  {% endif %}
+   <div class="pretty p-svg p-plain left">
+      <input type="checkbox" class="checkbox completed-day-check" value="Completed {{ product.title }}"/>
+        <div class="state">
+            <i class="fa fa-check-square svg" aria-hidden="true"></i>
+            <label class="completion">Completed</label>
+
+        </div>
+      </div>
+    
+    {% endif %}
+</div>

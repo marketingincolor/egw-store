@@ -1,0 +1,206 @@
+</div>
+</div>
+<div class="hero-banner hero--size-down-challenge {% if collection.title contains 'Little Black Dress' %}hero--lbd{% endif %} {% if handle contains 'gentlemen-restart' %}hero--grye{% endif %}">
+  <div class="hero-caption container">
+  {% if collection.title contains 'Little Black Dress' %}
+    <img src="{{ 'lbd-logo.svg' | asset_url }}" class="hero-icon" />
+    {% elsif handle contains '28-day' %}
+  <img src="{{ '28-day-icon.png' | asset_url }}" class="hero-icon" />
+    {% else %}
+    <img src="{{ 'grye-icon.png' | asset_url }}" class="hero-icon" />
+    {% endif %}
+</div>
+</div>
+<div class="day-navigation">
+  {% include 'day-navigation-bar' %}
+</div>
+
+<div class="container" style="padding-top:0px;">
+  <h1>Menus</h1>
+ 
+  {% for link in linklists[collection.handle].links %}
+  {% assign collection = link.object %}
+<div class="day-card card-wrapper-x-top">
+   
+<div class="week-row">
+  <div class="card-header">
+  <h2>{{ link.title }}</h2> 
+    
+    
+    {% if link.title == 'Week 1' %}
+    	{% assign menus_navigation = handle | append: '-week-1'  %}
+    {% endif %}
+    
+    {% if link.title == 'Week 2' %}
+        {% assign menus_navigation = handle | append: '-week-2'  %}
+    {% endif %}
+    
+    {% if link.title contains 'Week 3' %}
+    	{% assign menus_navigation = handle | append: '-week-3'  %}
+    {% endif %}
+    
+    {% if link.title == 'Week 4' %}
+        {% assign menus_navigation = handle | append: '-week-4'  %}
+    {% endif %}
+    
+    {% for link in linklists[menus_navigation].links %}
+  		<span class="groceries-link"><a href="{{ link.url }}" target="_blank">{{ link.title }}</a></span>
+    {% endfor %}
+    
+  </div>
+
+{% for product in collection.products %}
+  
+  <div class="calendar--day calendar--day-menu">
+      <h4>{{ product.title | split: '| ' | last }}</h4>
+      <ul class="video-nav">
+        <li><a href="{{ product.url }}#menu-1" class="menu-link">Breakfast</a></li>
+        <li><a href="{{ product.url }}#menu-2" class="menu-link">Lunch</a></li>
+        <li><a href="{{ product.url }}#menu-3" class="menu-link">Dinner</a></li>
+        <li><a href="{{ product.url }}#menu-4" class="menu-link">Full Day</a></li>
+    </ul>
+    
+    
+  
+
+  </div>
+  {% endfor %}
+  </div>
+ 
+</div>
+  {% endfor %}
+</div>
+  
+
+
+{% schema %}
+
+{
+  "name": "Collection",
+  "class": "collection-template-section",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "banner",
+      "label": "Description Banner"
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "pagination_limit",
+      "label": "Products per page",
+      "min": 2,
+      "max": 50,
+      "step": 1,
+      "default": 48
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_breadcrumb",
+      "label": "Show breadcrumb",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "display_collection_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_sort",
+      "label": "Enable collection sorting"
+    },
+    {
+      "type": "checkbox",
+      "id": "collection_tags",
+      "label": "Enable filtering by product tag"
+    },
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "paragraph",
+      "content": "Create a sidebar by adding content blocks."
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle",
+      "label": "Toggle sidebar content",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_by_tag",
+      "name": "Tag list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_collection",
+      "name": "Collection list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_type",
+      "name": "Type list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_vendor",
+      "name": "Vendor list",
+      "limit": 1
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "custom_menu_linklist",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Text area can be used for special announcements or general information.</p>"
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": "Page",
+      "settings": [
+        {
+          "type": "page",
+          "id": "content_page",
+          "label": "Page"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

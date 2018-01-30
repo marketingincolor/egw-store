@@ -1,0 +1,62 @@
+
+<div style="display:none">
+  <div id="disclaimer-modal">
+    <h3 class="align_center">Warning!</h3>
+    <div class="modal-content">
+      <div class="disclaimer-content">
+      {{ pages.disclaimer.content }}
+      </div>
+      <div class="must-accept-content">
+        <h3 class="align_center">WAIVER REQUIRED TO VIEW WORKOUTS</h3>
+		{{ pages.disclaimer-must-be-accepted.content }}
+        <a href="#!" class="return-to-waiver action_button">Return to Waiver</a>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <div class="disclailer-checkbox">
+        <div class="disclaimer-tooltip">
+          <div class="tooltip-inner">
+            To accept you must check here
+          </div>
+        </div>
+                <input type="checkbox" name="disclaimer-check" id="disclaimer-check" value="Accepted Disclaimer" />
+
+        <label for="disclaimer-check">By checking the box and clicking “Accept”, I acknowledge that I have read, understand, and agree with this warning.</label>
+      </div>
+      <div class="disclaimer-buttons">
+        <a href="#!" class="i-decline action_button">Decline</a>
+        <a href="#!" class="i-accept action_button disabled_button">Accept</a>
+        {% include 'small-loader' %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+
+    $('#disclaimer-check').on('change',function(){
+      if ($('#disclaimer-check').is(':checked')) {
+         $('.i-accept').removeClass('disabled_button');
+      } else {
+         $('.i-accept').addClass('disabled_button');
+      }
+    });
+    $('.i-accept').click(function() {
+      if (!$('#disclaimer-check').is(':checked')) {
+         $('.disclaimer-tooltip').addClass('show-checkbox-tooltip');
+      }
+      
+    });
+    
+    $('.i-decline').click(function(){
+     $('.disclaimer-content, .modal-actions').addClass('hide-disclaimer-content');
+     $('.must-accept-content').addClass('show-acceptance-content');
+    });
+    
+    $('.return-to-waiver').click(function(){
+     $('.disclaimer-content, .modal-actions').removeClass('hide-disclaimer-content');
+     $('.must-accept-content').removeClass('show-acceptance-content');
+    });
+  });       
+</script>

@@ -1,0 +1,35 @@
+{% include 'small-loader' %}
+
+<div class="completed-check">
+  
+{% assign completed_this = false %}
+    {% for tag in customer.tags %}
+		
+		{% assign product_title = product.title | prepend: 'Completed ' %}
+	
+    	{% if tag contains product_title %}
+    		{% assign completed_this = true %}
+    	{% endif %}
+    {% endfor %}
+    {% if customer and completed_this %}
+    <div class="pretty p-svg p-plain left">
+      <input type="checkbox" class="checkbox completed-day-check" checked value="Completed {{ product.title }}">
+        <div class="state">
+            <i class="fa fa-check-square svg" aria-hidden="true"></i>
+            <label class="completion">{% if template contains 'menus' %}Completed{% endif %}</label>
+
+        </div>
+      </div>
+    {% else %}
+  
+   <div class="pretty p-svg p-plain left">
+      <input type="checkbox" class="checkbox completed-day-check" value="Completed {{ product.title }}"/>
+        <div class="state">
+            <i class="fa fa-check-square svg" aria-hidden="true"></i>
+            <label class="completion">{% if template contains 'menus' %}Completed{% endif %}</label>
+
+        </div>
+      </div>
+    
+    {% endif %}
+</div>

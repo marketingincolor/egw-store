@@ -1,0 +1,501 @@
+</div>
+</div>
+<div class="hero-banner hero--size-down-challenge {% if handle contains 'little-black' %}hero--lbd{% endif %} {% if handle contains 'gentlemen-restart' %}hero--grye{% endif %}">
+  <div class="hero-caption container">
+  {% if handle contains 'little-black' %}
+    <img src="{{ 'lbd-logo.svg' | asset_url }}" class="hero-icon" />
+    {% elsif handle contains '28-day' %}
+  <img src="{{ '28-day-icon.png' | asset_url }}" class="hero-icon" />
+    {% else %}
+    <img src="{{ 'grye-icon.png' | asset_url }}" class="hero-icon" />
+    {% endif %}
+</div>
+</div>
+<div class="day-navigation">
+  {% include 'day-navigation-bar' %}
+</div>
+<div class="content container">
+<div class="day-card day-card-1">
+  <div class="card-header">
+<div class="sixteen columns">
+  <div class="eight columns alpha">
+    <h1 class="day-number-title">{{ product.title | split: '| ' | last }}</h1>
+  </div>
+  <div class="eight columns omega day-actions">
+    {% include 'completed-check' %}
+    {% if handle contains 'little-black-dress' %}
+    {% assign program_collection = 'little-black-dress' %}
+    {% endif %}
+    {% if handle contains '28-day-size-down-challenge' %}
+    {% assign program_collection = '28-day-size-down-challenge' %}
+    {% endif %}
+    <select class="day-selector">
+      <option selected disabled>CHOOSE A DAY</option>
+      {% for product in collections[program_collection].products %}
+      <option value="{{ product.url }}">{{ product.title | split: '| ' | last }}</option>
+      {% endfor %}
+    </select>
+  </div>
+    </div>
+</div>
+<div class="sixteen columns">
+  {% unless product.tags contains 'Rest Day' %}
+  <div class="eight columns alpha">
+    <div class="card-inner card-inner-left card-inner-x-top">
+    <div class="video-container">
+      {% unless customer.tags contains 'Accepted Disclaimer' %}<a href="#disclaimer-modal" id="disclaimer" class="fancybox disclaimer-link-overlay"></a>{% endunless %}
+      <iframe {% unless customer.tags contains 'Accepted Disclaimer' %}class="deactivated-video"{% endunless %} src="{{ product.metafields.c_f.day_full_video | replace: 'vimeo.com/', 'player.vimeo.com/video/' }}?title=0&byline=0&portrait=0" width="1280" height="720" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+      
+    </div>
+    </div>
+  </div>
+  {% endunless %}
+    <div class="{% if product.tags contains 'Rest Day' %}sixteen{% else %}eight{% endif %} columns omega day-intro">
+      <div class="card-inner card-inner-right card-inner-x-top">
+      <h4 class="day-product-type">{{ product.type }}</h4>
+      {{ product.description | split: 'Menu' | first }}
+       
+  </div>
+
+</div>
+<div class="sixteen columns day-content">
+  <div class="card-inner card-inner-x-top">
+    <div class="program-btns">
+    {% unless product.tags contains 'Rest Day' %}
+        {% if customer.tags contains 'Accepted Disclaimer' %}
+          {% include 'day-verified-show-videos' %}
+        {% else %}
+        <a href="#disclaimer-modal" id="disclaimer" class="fancybox action_button small_button">Preview</a>
+        <a href="#disclaimer-modal" id="disclaimer" class="fancybox action_button small_button">Warm Up</a>
+        <a href="#disclaimer-modal" id="disclaimer" class="fancybox action_button small_button">Warm Down</a>
+        <a href="#disclaimer-modal" id="disclaimer" class="fancybox action_button small_button">Stretch</a>
+        {% endif %}
+        {% endunless %}
+    </div>
+    <p>Printable Versions</p>
+    {% if handle contains '28-day-size-down-challenge'%}
+    {% if product.handle == '28-day-size-down-challenge-day-1' or product.handle  == '28-day-size-down-challenge-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+           {% assign menu_handle = '28-day-size-down-challenge-day-1' %}
+           <a href="{{ all_products[menu_handle].metafields.c_f.weekly_menu }}" class="secondary_button video-btn" target="_blank">Week 1 Menu <i class="blue-accent fa fa-download"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12' or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           {% assign menu_handle = '28-day-size-down-challenge-day-8' %}
+           <a href="{{ all_products[menu_handle].metafields.c_f.weekly_menu }}" class="secondary_button video-btn" target="_blank">Week 2 Menu <i class="blue-accent fa fa-download"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-15' or product.handle contains '-day-16' or product.handle contains '-day-17'  or product.handle contains '-day-18'  or product.handle contains '-day-19'  or product.handle contains '-day-20' or product.handle contains '-day-21' %}
+           {% assign menu_handle = '28-day-size-down-challenge-day-15' %}
+           <a href="{{ all_products[menu_handle].metafields.c_f.weekly_menu }}" class="secondary_button video-btn" target="_blank">Week 3 Menu <i class="blue-accent fa fa-download"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-22' or product.handle contains '-day-23' or product.handle contains '-day-24'  or product.handle contains '-day-25'  or product.handle contains '-day-26'  or product.handle contains '-day-27' or product.handle contains '-day-28' %}
+           {% assign menu_handle = '28-day-size-down-challenge-day-22' %}
+           <a href="{{ all_products[menu_handle].metafields.c_f.weekly_menu }}" class="secondary_button video-btn" target="_blank">Week 4 Menu <i class="blue-accent fa fa-download"></i></a>
+           {% endif %}
+ {% if product.handle == '28-day-size-down-challenge-day-1' or  product.handle == '28-day-size-down-challenge-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+            <a href="{% assign menu_handle = '28-day-size-down-challenge-day-1' %}
+           {{ all_products[menu_handle].metafields.c_f.weekly_grocery_list_link }}" target="_blank" class="secondary_button video-btn">Week 1 Grocery List <i class="blue-accent fa fa-shopping-basket"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12' or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           {% assign menu_handle = '28-day-size-down-challenge-day-8' %}
+           <a href="{% assign menu_handle = '28-day-size-down-challenge-day-8' %}
+           {{ all_products[menu_handle].metafields.c_f.weekly_grocery_list_link }}" target="_blank" class="secondary_button video-btn">Week 2 Grocery List <i class="blue-accent fa fa-shopping-basket"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-15' or product.handle contains '-day-16' or product.handle contains '-day-17'  or product.handle contains '-day-18'  or product.handle contains '-day-19'  or product.handle contains '-day-20' or product.handle contains '-day-21' %}
+           {% assign menu_handle = '28-day-size-down-challenge-day-15' %}
+           <a href="{% assign menu_handle = '28-day-size-down-challenge-day-15' %}
+           {{ all_products[menu_handle].metafields.c_f.weekly_grocery_list_link }}" target="_blank" class="secondary_button video-btn">Week 3 Grocery List <i class="blue-accent fa fa-shopping-basket"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-22' or product.handle contains '-day-23' or product.handle contains '-day-24'  or product.handle contains '-day-25'  or product.handle contains '-day-26'  or product.handle contains '-day-27' or product.handle contains '-day-28' %}
+           {% assign menu_handle = '28-day-size-down-challenge-day-22' %}
+           <a href="{% assign menu_handle = '28-day-size-down-challenge-day-22' %}
+           {{ all_products[menu_handle].metafields.c_f.weekly_grocery_list_link }}" target="_blank" class="secondary_button video-btn">Week 4 Grocery List <i class="blue-accent fa fa-shopping-basket"></i></a>
+           {% endif %}
+    {% elsif handle contains 'little' %}
+    {% if product.handle == 'little-black-dress-day-1' or product.handle  == 'little-black-dress-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+           {% assign menu_handle = 'little-black-dress-day-1' %}
+           <a href="{{ all_products[menu_handle].metafields.c_f.weekly_menu }}" class="secondary_button video-btn" target="_blank">Week 1 Menu <i class="blue-accent fa fa-download"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12' or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           {% assign menu_handle = 'little-black-dress-day-8' %}
+           <a href="{{ all_products[menu_handle].metafields.c_f.weekly_menu }}" class="secondary_button video-btn" target="_blank">Week 2 Menu <i class="blue-accent fa fa-download"></i></a>
+           {% endif %}
+           
+ {% if product.handle == 'little-black-dress-day-1' or  product.handle == 'little-black-dress-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+            <a href="{% assign menu_handle = 'little-black-dress-day-1' %}
+           {{ all_products[menu_handle].metafields.c_f.weekly_grocery_list_link }}" target="_blank" class="secondary_button video-btn">Week 1 Grocery List <i class="blue-accent fa fa-shopping-basket"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12' or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           {% assign menu_handle = 'little-black-dress-day-8' %}
+           <a href="{% assign menu_handle = 'little-black-dress-day-8' %}
+           {{ all_products[menu_handle].metafields.c_f.weekly_grocery_list_link }}" target="_blank" class="secondary_button video-btn">Week 2 Grocery List <i class="blue-accent fa fa-shopping-basket"></i></a>
+           {% endif %}
+    
+    {% else %}
+       {% if product.handle == 'gentlemen-restart-your-engines-day-1' or product.handle  contains '-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+           {% assign menu_handle = 'gentlemen-restart-your-engines-day-1' %}
+           <a href="{{ all_products[menu_handle].metafields.c_f.weekly_menu }}" class="secondary_button video-btn" target="_blank">Week 1 Menu <i class="blue-accent fa fa-download"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12' or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           {% assign menu_handle = 'gentlemen-restart-your-engines-day-8' %}
+           <a href="{{ all_products[menu_handle].metafields.c_f.weekly_menu }}" class="secondary_button video-btn" target="_blank">Week 2 Menu <i class="blue-accent fa fa-download"></i></a>
+           {% endif %}
+           
+ {% if product.handle == 'gentlemen-restart-your-engines-day-1' or  product.handle == 'gentlemen-restart-your-engines-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+            <a href="{% assign menu_handle = 'gentlemen-restart-your-engines-day-1' %}
+           {{ all_products[menu_handle].metafields.c_f.weekly_grocery_list_link }}" target="_blank" class="secondary_button video-btn">Week 1 Grocery List <i class="blue-accent fa fa-shopping-basket"></i></a>
+           {% endif %}
+           {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12' or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           {% assign menu_handle = 'gentlemen-restart-your-engines-day-8' %}
+           <a href="{% assign menu_handle = 'gentlemen-restart-your-engines-day-8' %}
+           {{ all_products[menu_handle].metafields.c_f.weekly_grocery_list_link }}" target="_blank" class="secondary_button video-btn">Week 2 Grocery List <i class="blue-accent fa fa-shopping-basket"></i></a>
+           {% endif %}    
+    {% endif %}
+           
+  <h3>{{ product.title | split: '| ' | last }} Menu</h3>
+    {{ product.description | split: 'Menu' | last }}
+  </div>
+</div>
+  </div>
+</div>
+  {% if handle contains '28-day-size-down-challenge'%}
+  {% unless product.title contains 'Day 28' %}
+<div class="sixteen columns">
+<div class="day-card day-card-2">
+  <div class="five columns alpha" style="background-image:url({% if product.handle == '28-day-size-down-challenge-day-1' or product.handle == '28-day-size-down-challenge-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+            {% assign reflections_handle = '28-day-size-down-challenge-day-1' %}
+            {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+            {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12'  or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           {% assign reflections_handle = '28-day-size-down-challenge-day-8' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+           {% if product.handle contains '-day-15' or product.handle contains '-day-16' or product.handle contains '-day-17'  or product.handle contains '-day-18'  or product.handle contains '-day-19'  or product.handle contains '-day-20' or product.handle contains '-day-21' %}
+           {% assign reflections_handle = '28-day-size-down-challenge-day-15' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+           {% if product.handle contains '-day-22' or product.handle contains '-day-23' or product.handle contains '-day-24'  or product.handle contains '-day-25'  or product.handle contains '-day-26'  or product.handle contains '-day-27' or product.handle contains '-day-28' %}
+           {% assign reflections_handle = '28-day-size-down-challenge-day-22' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+                                              {% endif %})">
+ 
+  </div>
+  <div class="eleven columns omega">
+    <div class="self-reflection-content">
+    	   {% if product.handle == '28-day-size-down-challenge-day-1' or product.handle == '28-day-size-down-challenge-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+    
+    		<h4>Week 1 Self-Reflection</h4>
+    		{% assign reflections_handle = '28-day-size-down-challenge-day-1' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/28-day-size-down-challenge-week-1-self-reflection" class="action_button">View Self-Reflection</a>
+           {% endif %}
+           {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12'  or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           <h4>Week 2 Self-Reflection</h4>
+    		{% assign reflections_handle = '28-day-size-down-challenge-day-8' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/28-day-size-down-challenge-week-2-self-reflection" class="action_button">View Self-Reflection</a>
+    	
+           {% endif %}
+           {% if product.handle contains '-day-15' or product.handle contains '-day-16' or product.handle contains '-day-17'  or product.handle contains '-day-18'  or product.handle contains '-day-19'  or product.handle contains '-day-20' or product.handle contains '-day-21' %}
+           <h4>Week 3 Self-Reflection</h4>
+    		{% assign reflections_handle = '28-day-size-down-challenge-day-15' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/28-day-size-down-challenge-week-3-self-reflection" class="action_button">View Self-Reflection</a>
+           {% endif %}
+           {% if product.handle contains '-day-22' or product.handle contains '-day-23' or product.handle contains '-day-24'  or product.handle contains '-day-25'  or product.handle contains '-day-26'  or product.handle contains '-day-27' or product.handle contains '-day-28' %}
+           <h4>Week 4 Self-Reflection</h4>
+    		{% assign reflections_handle = '28-day-size-down-challenge-day-22' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/28-day-size-down-challenge-week-4-self-reflection" class="action_button">View Self-Reflection</a>
+           {% endif %} 
+  </div>
+  </div>
+  </div>
+</div>
+  {% endunless %}
+  {% elsif handle contains 'little' %}
+  <div class="sixteen columns">
+<div class="day-card day-card-2">
+  <div class="five columns alpha" style="background-image:url({% if product.handle == 'little-black-dress-day-1' or product.handle == 'little-black-dress-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+            {% assign reflections_handle = 'little-black-dress-day-1' %}
+            {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+            {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12'  or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           {% assign reflections_handle = 'little-black-dress-day-8' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %})">
+ 
+  </div>
+  <div class="eleven columns omega">
+    <div class="self-reflection-content">
+    	   {% if product.handle == 'little-black-dress-day-1' or product.handle == 'little-black-dress-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+    
+    		<h4>Week 1 Self-Reflection</h4>
+    		{% assign reflections_handle = 'little-black-dress-day-1' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/little-black-dress-week-1-self-reflection" class="action_button">View Self-Reflection</a>
+           {% endif %}
+           {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12'  or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           <h4>Week 2 Self-Reflection</h4>
+    		{% assign reflections_handle = 'little-black-dress-day-8' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/little-black-dress-week-2-self-reflection" class="action_button">View Self-Reflection</a>
+    	
+           {% endif %}
+           
+  </div>
+  </div>
+  </div>
+</div>
+  {% else %}
+  <div class="sixteen columns">
+<div class="day-card day-card-2">
+  <div class="five columns alpha" style="background-image:url({% if product.handle == 'gentlemen-restart-your-engines-day-1' or product.handle == 'gentlemen-restart-your-engines-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+            {% assign reflections_handle = 'gentlemen-restart-your-engines-day-1' %}
+            {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %}
+            {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12'  or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           {% assign reflections_handle = 'gentlemen-restart-your-engines-day-8' %}
+           {{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_image }}
+           {% endif %})">
+ 
+  </div>
+  <div class="eleven columns omega">
+    <div class="self-reflection-content">
+    	   {% if product.handle == 'gentlemen-restart-your-engines-day-1' or product.handle == 'gentlemen-restart-your-engines-day-2' or product.handle contains '-day-3'  or product.handle contains '-day-4'  or product.handle contains '-day-5'  or product.handle contains '-day-6' or product.handle contains '-day-7' %}
+    
+    		<h4>Week 1 Self-Reflection</h4>
+    		{% assign reflections_handle = 'gentlemen-restart-your-engines-day-1' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/gentlemen-restart-your-engines-week-1-self-reflection" class="action_button">View Self-Reflection</a>
+           {% endif %}
+           {% if product.handle contains '-day-8' or product.handle contains '-day-9' or product.handle contains '-day-10'  or product.handle contains '-day-11'  or product.handle contains '-day-12'  or product.handle contains '-day-13' or product.handle contains '-day-14' %}
+           <h4>Week 2 Self-Reflection</h4>
+    		{% assign reflections_handle = 'gentlemen-restart-your-engines-day-8' %}
+    		<h3>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_title }}</h3>
+    		<p>{{ all_products[reflections_handle].metafields.c_f.weekly_self_reflection_text }}</p>
+    		<a href="/pages/gentlemen-restart-your-engines-week-2-self-reflection" class="action_button">View Self-Reflection</a>
+    	
+           {% endif %}
+           
+  </div>
+  </div>
+  </div>
+</div>
+  {% endif %}
+
+<style>
+  {% if section.settings.set_product_height %}
+    .product_slider .slides img { max-height: {{ section.settings.product_height }}px; }
+  {% endif %}
+</style>
+
+  <script type="text/javascript">
+    $(document).ready(function(){
+      $('.day-number-title').html(function(i, v) {
+          return v.replace(/(\d)/g, '<span>$1</span>');
+      });
+	
+      if (/dayupdated/.test(window.location.href) && $('.completed-check .pretty input[type="checkbox"]').is(':checked')) {
+      setTimeout(function(){
+       $('.share-completion').addClass('show-sharing');
+      },1000);
+    }
+      $(document).click(function() {
+    $('.share-completion').removeClass('show-sharing');
+	});
+});
+</script>
+  
+{% unless customer.tags contains 'Accepted Disclaimer' %}
+	{% include 'disclaimer-box' %}
+{% endunless %}  
+  
+{% schema %}
+
+{
+  "name": "Product",
+  "class": "product-template-section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "product_breadcrumb",
+      "label": "Show collection link",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "display_tags",
+      "label": "Show tags"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_type",
+      "label": "Show type"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_vendor",
+      "label": "Show vendor"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_collections",
+      "label": "Show collections"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_sku",
+      "label": "Show SKU"
+    },
+    {
+      "type": "checkbox",
+      "id": "display_social_buttons",
+      "label": "Show social media share icons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "display_related_products",
+      "label": "Show related products ([?](https:\/\/help.outofthesandbox.com\/hc\/en-us\/articles\/115006909487-Related-Products))",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "products_per_row",
+      "label": "Related products per row",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "radio",
+      "id": "product_description_position",
+      "label": "Description position",
+      "options": [
+        {
+          "value": "top",
+          "label": "Above 'add to cart'"
+        },
+        {
+          "value": "bottom",
+          "label": "Below 'add to cart'"
+        }
+      ]
+    },
+    {
+      "type": "radio",
+      "id": "product_images_position",
+      "label": "Images position",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "right",
+          "label": "Right"
+        }
+      ]
+    },
+    {
+      "type": "checkbox",
+      "id": "set_product_height",
+      "label": "Set height of product images"
+    },
+    {
+      "type": "range",
+      "id": "product_height",
+      "label": "Product image height",
+      "min": 200,
+      "max": 800,
+      "step": 10,
+      "default": 500,
+      "unit": "px"
+    },
+    {
+      "type": "header",
+      "content": "Sidebar"
+    },
+    {
+      "type": "paragraph",
+      "content": "Create a sidebar by adding content blocks."
+    },
+    {
+      "type": "checkbox",
+      "id": "toggle",
+      "label": "Toggle sidebar content",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "filter_by_tag",
+      "name": "Tag list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_collection",
+      "name": "Collection list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_type",
+      "name": "Type list",
+      "limit": 1
+    },
+    {
+      "type": "filter_by_vendor",
+      "name": "Vendor list",
+      "limit": 1
+    },
+    {
+      "type": "menu",
+      "name": "Menu",
+      "settings": [
+        {
+          "type": "link_list",
+          "id": "custom_menu_linklist",
+          "label": "Menu"
+        }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Heading",
+          "default": "Heading"
+        },
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "Text",
+          "default": "<p>Text area can be used for special announcements or general information.</p>"
+        }
+      ]
+    },
+    {
+      "type": "page",
+      "name": "Page",
+      "settings": [
+        {
+          "type": "page",
+          "id": "content_page",
+          "label": "Page"
+        }
+      ]
+    }
+  ]
+}
+
+{% endschema %}

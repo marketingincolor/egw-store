@@ -1,0 +1,53 @@
+<div class="sixteen columns clearfix collection_nav">
+  <h1 class="collection_title">
+    {{ page.title }}
+  </h1>
+</div>
+
+<div class="sixteen columns page">
+  {% include 'page-multi-column', content: page.content %}
+</div>
+<form id="lead-information" action="/">
+{% for product in collections.programs.products %}
+{% if product.metafields.sharpspring.product_code != blank %}
+	<input type="hidden" name="products_59fb470aea6dc[]" value="{{ product.metafields.sharpspring.product_code}}" />
+{% endif %}
+{% endfor %}
+  <input type="hidden" name="firstName" value="{{ customer.first_name }}"/>
+  <input type="hidden" name="lastName" value="{{ customer.last_name }}"/>
+  <input type="hidden" name="emailAddress" value="{{ customer.email }}"/>
+</form>
+<script type="text/javascript">
+  $(document).ready(function(){
+    $(".clickable").click(function() {
+      console.log('Processing');
+	  var $form = $('#lead-information');
+      console.log($form.serialize());
+      //alert($(this).attr('id'));
+      $.ajax({
+        type: "GET",
+        url: 'https://marketingincolor.com/apps/ssfields.php',
+        crossDomain: true,
+        data: $form.serialize(),
+        success: function(data)
+        {
+          console.log(data);
+        },
+
+        error: function (result, id, error) {
+          console.log(result);
+          console.log(id);
+          console.log(error);
+        }
+
+      });
+    });
+
+
+
+
+  });
+</script>
+
+<a href="#" class="clickable action_button">Test</a>
+

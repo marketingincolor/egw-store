@@ -1,0 +1,67 @@
+<div class="newsletter--footer-wrapper">
+
+    <div class="newsletter--heading fluid-block">
+      <h4>Get <b>FREE</b> Wellness Tips Delivered!</h4>
+    </div>
+    <div class="newsletter--form fluid-block">
+     {% form 'customer' %}
+    {% if form.posted_successfully? %}
+      <a href="#newsletter-thanks" class="fancybox newsletter-modal" style="display:none;"></a>
+      <script>
+        $(document).ready(function(){
+          $('.newsletter-modal').click();
+          
+          $('.start-shopping').click(function(){
+            $.fancybox.close();
+          });
+        });
+      </script>
+    {% elsif form.errors %}
+      {% for field in form.errors %}
+        <p><em>{{ field }} - {{ form.errors.messages[field] }}</em></p>
+      {% endfor %}
+    {% endif %}
+
+    {% if template contains "password" %}
+      <input type="hidden" name="contact[tags]" value="prospect,password page"/>
+    {% else %}
+      <input type="hidden" name="contact[tags]" value="newsletter"/>
+    {% endif %}
+
+    {% if settings.display_first_name %}
+      <input class="newsletter-half first-name" type="text" name="contact[first_name]" placeholder="{{ 'general.newsletter_form.subscriber_first_name' | t }}" />
+    {% endif %}
+    {% if settings.display_last_name %}
+      <input class="newsletter-half last-name" type="text" name="contact[last_name]" placeholder="{{ 'general.newsletter_form.subscriber_last_name' | t }}" />
+    {% endif %}
+  
+    <input type="hidden" name="challenge" value="false">  
+    <input type="email" class="contact_email fluid-block" name="contact[email]" required placeholder="Your Email Address" autocorrect="off" autocapitalize="off" />
+    <div class="fluid-block">
+      <div class="pretty p-svg p-plain left">
+      <input type="checkbox" class="left" required checked />
+        <div class="state">
+            <i class="fa fa-check-square-o svg" aria-hidden="true"></i>
+            <label class="terms-label">I accept your <a href="#terms" class="fancybox orange-accent">terms & conditions</a></label>
+        </div>
+      </div>
+ 
+    </div>
+      <button type='submit' class="action_button sign_up fluid-block orange-button"><i class="fa fa-newspaper-o"></i> Subscribe</button>
+  {% endform %}
+    </div>
+
+</div>
+
+<div style="display:none">
+  <div id="terms" class="maxed-block">
+    {{ pages.newsletter-terms.content }}
+  </div>
+</div>
+
+<div style="display:none">
+  <div id="newsletter-thanks" class="maxed-block">
+    <h3>Thank You!</h3>
+    <a href="#!" class="start-shopping action_button">Get Started</a>
+  </div>
+</div>

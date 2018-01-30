@@ -1,0 +1,69 @@
+<div class="container">
+<div class="sixteen columns navigation-wrapper">
+  <ul class="program-navigation {% if handle contains 'little-black-dress' %}lbd-program-navigation{% endif %} {% if handle contains 'gentlemen' %}grye-program-navigation{% endif %}">
+    {% if template contains 'collection' %}
+    {% assign program_menu = collection.handle | split: '-week' | first | remove: '-menus'| remove: '-videos' | remove: '-week' | remove: '-self-reflections' | remove: '-calendar' %}
+    {% elsif template contains 'product' %}
+    {% assign program_menu = product.title | split: '| ' | first | handleize %}
+    {% elsif template contains 'page' %}
+    {% assign program_menu = page.handle | split: '-week'| first | remove: '-quick-start-guide' | remove: '-jaime-brenkus' %}
+    {% endif %}
+    {% for link in linklists[program_menu].links %}
+    {% assign link_handle = link.title | handleize %}
+
+    <li>
+      <a href="{{ link.url }}" class="{%if link.title == 'Self-Reflections' %}reflections-icon {% endif %}{% if link.active %}active-area{% endif %}">
+        <span class="icon-image">
+          {% if link.title == 'Home' %}
+          <i class="fa fa-home"></i>
+          {% elsif link.title == 'Calendar' %}
+          <i class="fa fa-calendar"></i>
+          {% elsif link.title == 'Videos' %}
+          <i class="fa fa-video-camera"></i>
+          {% elsif link.title == 'Menus' %}                          
+          <i class="fa fa-cutlery"></i>
+          {% elsif link.title == 'Grocery Lists' %} 
+          <i class="fa fa-shopping-basket"></i>
+          {% elsif link.title == 'Self-Reflections' %}
+          {% include 'self-reflection-icon' %}
+          {% elsif link.title == 'About Jaime' %}
+          <i class="fa fa-address-card"></i>
+          {% endif %}
+          
+          
+         </span>
+        <span class="link-text">{{ link.title  }}</span>
+      </a>
+    </li>
+    
+    {% endfor %}
+  </ul>
+  <div class="mobile-only-nav">
+  {% if handle contains '28-day' %}
+  {% assign program_collection = '28-day-size-down-challenge' %}
+    <select class="day-selector">
+      <option selected disabled>Navigate Program</option>
+      {% for link in linklists[program_collection].links %}
+      <option value="{{ link.url }}">{{ link.title }}</option>
+      {% endfor %}
+    </select>
+    {% elsif handle contains 'little-black-dress' %}
+    {% assign program_collection = 'little-black-dress' %}
+    <select class="day-selector">
+      <option selected disabled>Navigate Program</option>
+      {% for link in linklists[program_collection].links %}
+      <option value="{{ link.url }}">{{ link.title }}</option>
+      {% endfor %}
+    </select>
+    {% elsif handle contains 'gentlemen' %}
+    {% assign program_collection = 'gentlemen-restart-your-engines' %}
+    <select class="day-selector">
+      <option selected disabled>Navigate Program</option>
+      {% for link in linklists[program_collection].links %}
+      <option value="{{ link.url }}">{{ link.title }}</option>
+      {% endfor %}
+    </select>
+    {% endif %}
+  </div>
+</div>
+</div>

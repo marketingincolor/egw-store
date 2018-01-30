@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if IE 9 ]><html class="ie ie9" lang="{{ shop.locale }}"> <![endif]-->
+<!--[if (gte IE 10)|!(IE)]><!--><html lang="{{ shop.locale }}"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="cleartype" content="on">
+    {% if template contains 'property' %}
+    <meta name="robots" content="noindex">
+    {% else %}
+    <meta name="robots" content="index,follow">
+    {% endif %}
+    
+
+    {% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %}{% endif %}
+    <title>{% if template contains "index" %}{{ page_title }}{% else %}{{ page_title }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}{% endif %}{% unless page_title contains shop.name %} - {{ shop.name }}{% endunless %}{% endif %}</title>
+
+    {% if page_description %}
+      <meta name="description" content="{{ page_description | escape }}{% if current_tags %} {{ 'general.meta.tagged_html' | t: tags: meta_tags | escape }}.{% endif %}{% if current_page != 1 %} {{ 'general.meta.page' | t: page_number: current_page }}.{% endif %}" />
+    {% endif %}
+    
+    <meta property="fb:pages" content="214523438891340">
+    
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f)
+    })(window,document,'script','dataLayer','GTM-556TBH');</script>
+    <!-- End Google Tag Manager -->    
+
+    <!-- Custom Fonts -->
+    {% if settings.logo_font contains 'Google' or settings.headline_font contains 'Google' or settings.nav_font contains 'Google' or settings.slideshow_subtitle_font contains 'Google' or settings.regular_font contains 'Google' %}
+      <link href="//fonts.googleapis.com/css?family=.|{% if settings.logo_font contains 'Google' %}{{ settings.logo_font | replace: 'Google_', '' }}:light,normal,bold|{% endif %}{% if settings.headline_font contains 'Google' %}{{ settings.headline_font | replace: 'Google_', '' }}:light,normal,bold|{% endif %}{% if settings.nav_font contains 'Google' %}{{ settings.nav_font | replace: 'Google_', '' }}:light,normal,bold|{% endif %}{% if settings.slideshow_subtitle_font contains 'Google' %}{{ settings.slideshow_subtitle_font | replace: 'Google_', '' }}:light,normal,bold|{% endif %}{% if settings.slideshow_subtitle_font contains 'Google' %}{{ settings.slideshow_subtitle_font | replace: 'Google_', '' }}:light,normal,bold|{% endif %}{% if settings.regular_font contains 'Google' %}{{ settings.regular_font | replace: 'Google_', ''  }}:light,normal,bold{% endif %}|Montserrat:light,normal,bold|Playfair+Display:400,400i,700i" rel="stylesheet" type="text/css" />
+    {% endif %}
+
+    {% include 'social-meta-info' %}
+
+    {% if collection.previous_product %}
+      <link rel="prev" href="{{ collection.previous_product }}">
+    {% endif %}
+    {% if collection.next_product %}
+      <link rel="next" href="{{ collection.next_product }}">
+    {% endif %}
+
+    <!-- Mobile Specific Metas -->
+    <meta name="HandheldFriendly" content="True">
+    <meta name="MobileOptimized" content="320">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="{{ settings.shop_bg_color }}">
+
+    <!-- Stylesheets for Retina 4.2.2 -->
+    {{ 'styles.scss.css' | asset_url | stylesheet_tag }}
+    {{ 'mic-edits.scss.css' | asset_url | stylesheet_tag }}
+        {{ 'font-awesome.css' | asset_url | stylesheet_tag }}
+    {{ 'pretty-checkbox.min.css' | asset_url | stylesheet_tag }}
+
+    <!--[if lte IE 9]>
+      {{ 'ie.css' | asset_url | stylesheet_tag }}
+    <![endif]-->
+
+    {% if settings.favicon != nil %}
+      <link rel="shortcut icon" type="image/x-icon" href="{{ settings.favicon | img_url: '32x32' }}">
+    {% else %}
+      <link rel="shortcut icon" type="image/x-icon" href="{{ 'favicon.png' | asset_url }}">
+    {% endif %}
+
+    <link rel="canonical" href="{{ canonical_url }}" />
+
+    {% if template contains 'customer' %}
+      {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+      {{ "customer_area.js"  | shopify_asset_url | script_tag }}
+    {% endif %}
+
+    {{ 'app.js' | asset_url | script_tag }}
+    
+    <!-- Hotjar Tracking Code for myevergreenwellness.com -->
+    <script>
+        (function(h,o,t,j,a,r){
+            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+            h._hjSettings={hjid:748875,hjsv:6};
+            a=o.getElementsByTagName('head')[0];
+            r=o.createElement('script');r.async=1;
+            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+            a.appendChild(r);
+        })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+    </script>
+    <!-- /Hotjar Tracking Code for myevergreenwellness.com -->
+    
+    {{ content_for_header }}
+    
+    
+  </head>
+  {% if template contains "index" or template contains "article" or template contains "banner" or template contains "page.details" %}
+    {% assign feature_image = true %}
+  {% else %}
+    {% assign feature_image = false %}
+  {% endif %}
+
+  
+
+  <body class="{{ template | replace: '.', '-'  | replace: '/', '-' }} {{ template | replace: '.', ' ' | truncatewords: 1, '' | handle }} {% if feature_image %}feature_image{% endif %} {% if template contains '404' %}page_404{% endif %} {% if template == 'page' %}regular-page{% endif %} {% if handle contains 'little-black-dress'%}lbd-page{% endif %} {% if handle contains 'gentlemen'%}grye-page{% endif %}">
+    
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-556TBH"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <div id="content_wrapper">
+
+      {% section 'header' %}
+
+      <div {% unless template contains "product.details" %}class="content {% unless feature_image %}container{% endunless %}"{% endunless %}>
+        {{ content_for_layout }}
+      </div>
+
+      {% include 'cart-shipping-calculator' %}
+      {% section 'footer' %}
+
+      <div id="search">
+        <div class="container">
+          <div class="ten columns offset-by-three center">
+            <div class="right search-close">
+              <span class="icon-close"></span>
+            </div>
+            <form action="/search">
+              {% if settings.search_option != 'everything' %}
+                <input type="hidden" name="type" value="product" />
+              {% endif %}
+              <span class="icon-search search-submit"></span>
+              <input type="text" name="q" placeholder="{{ 'general.search.placeholder_with_shop_name' | t: shop_name: shop.name }}" value="{% if search and search.results.first.price %}{{ search.terms }}{% endif %}" autocapitalize="off" autocomplete="off" autocorrect="off" />
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% if settings.size_chart != blank %}
+      <div id="size-chart" class="size_chart_content">
+        <h5 class="center">{{ pages[settings.size_chart].title }}</h5>
+        {{ pages[settings.size_chart].content }}
+      </div>
+    {% endif %}
+
+    {% include 'newsletter-popup' %}
+    {% include 'currencies' %}
+    {% if settings.disqus_enabled %}
+      {% if template contains "blog" or template contains "article" or template contains "index" %}
+        <script id="dsq-count-scr" src="//{{ settings.disqus_shortname }}.disqus.com/count.js" async></script>
+      {% endif %}
+    {% endif %}
+    
+    <script>
+    $(document).ready(function(){
+      // bind change event to select
+      $('.day-selector, .week-selector').on('change', function () {
+          var url = $(this).val(); // get selected value
+          if (url) { // require a URL
+              window.location = url; // redirect
+          }
+          return false;
+      });
+    
+      $('.buy-btn').click(function(){
+        $('#program-form form').submit();
+      });
+
+      $('.collection-calendar .calendar--day-not-completed, .collection-days-view .calendar--day-not-completed').first().addClass('calendar--day-next-day');
+      
+      var i=0;
+      $('.product-day .day-content h4').each(function(){
+          $(this).contents().wrapAll('<a href="#!"/></a>');
+          i++;
+          var newID='menu-'+i;
+          $(this).find('a').attr('id',newID);
+          $(this).find('a').val(i);
+
+      });
+
+
+
+
+      $(function() {
+
+
+          // *only* if we have anchor on the url
+          if(window.location.hash) {
+
+              // smooth scroll to the anchor id
+              $('html, body').animate({
+                  scrollTop: $(window.location.hash).offset().top - 150 + 'px'
+              }, 0500, 'swing');
+          }
+
+      });
+
+          {% if page.handle contains 'grocery-list' %}
+          $('.sixteen.columns.page h3').each(function() {
+          $(this).nextUntil('h3').addBack().wrapAll('<div class="grocery-column"></div>');
+          });
+          {% endif %}
+          $('body :not(script)').contents().filter(function() {
+          return this.nodeType === 3;
+      }).replaceWith(function() {
+          return this.nodeValue.replace(/[™®©]/g, '<sup>$&</sup>');
+      });
+      });
+    </script>
+    
+  {% include 'tracking-pixels' %}
+ 
+  {% include 'checkbox-script' %}
+    
+    <script>
+      $(document).ready(function(){
+        {% if template contains 'product' %}
+        setTimeout(function(){
+        $('.single-option-selector').selectmenu();
+        },1000);
+        {% endif %}
+      $('a').each(function() {
+        if (this.href.indexOf('mailto') != -1) {
+          
+        } else {
+          var a = new RegExp('/' + window.location.host + '/');
+          if(!a.test(this.href)) {
+            var URL = $(this).attr('href');
+            $(this).click(function(event) {
+
+              event.preventDefault();
+              event.stopPropagation();
+              window.open(this.href, '_blank');
+
+            });
+
+          }
+        }
+        });
+      
+      var random = Math.floor(Math.random() * $('.testimonial-block').length);
+$('.testimonial-block').hide().eq(random).show();
+      });
+      
+      $('.product-lbd #block_1513250718492 p').each(function () {
+          var $this = $(this),
+              $val = $this.text(),
+              dec_pos = $val.indexOf('.');
+          $this.html($val.substring(0, dec_pos) + '<sup>' + $val.substring(dec_pos + 1) + '</sup>');
+      });
+      setTimeout(function(){
+      
+      $('.product-lbd #block_1513250718492 p').html(function(_, old){
+     return old.replace(/(\$\d+) /, '<strong>$1</strong> ');
+})
+      },1000);
+      
+      $('#block_1508791696548 p').each(function () {
+          var $this = $(this),
+              $val = $this.text(),
+              dec_pos = $val.indexOf('.');
+          $this.html($val.substring(0, dec_pos) + '<sup>' + $val.substring(dec_pos + 1) + '</sup>');
+      });
+      setTimeout(function(){
+      
+      $('#block_1508791696548 p').html(function(_, old){
+     return old.replace(/(\$\d+) /, '<strong>$1</strong> ');
+})
+      },1000);
+      
+       $('.product-grye #block_1513770921108 p').each(function () {
+          var $this = $(this),
+              $val = $this.text(),
+              dec_pos = $val.indexOf('.');
+          $this.html($val.substring(0, dec_pos) + '<sup>' + $val.substring(dec_pos + 1) + '</sup>');
+      });
+      setTimeout(function(){
+      
+      $('.product-grye #block_1513770921108 p').html(function(_, old){
+     return old.replace(/(\$\d+) /, '<strong>$1</strong> ');
+})
+      },1000);
+    </script>
+    
+    
+  </body>
+</html>

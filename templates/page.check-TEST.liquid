@@ -1,0 +1,35 @@
+{% include 'disclaimer-box' %}
+<div class="sixteen columns clearfix collection_nav">
+  <h1 class="collection_title">
+    {{ page.title }}
+  </h1>
+</div>
+
+<div class="sixteen columns page" style="padding:100px 0;">
+  {% include 'page-multi-column', content: page.content %}
+  
+  
+    <div class="calendar--day calendar--day-completed">
+    <div class="pretty p-svg p-plain left">
+      <input type="checkbox" class="checkbox completed-check" value="" />
+        <div class="state">
+            <i class="fa fa-check-square svg" aria-hidden="true"></i>
+            <label class="completion">Completed</label>
+
+        </div>
+      </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+

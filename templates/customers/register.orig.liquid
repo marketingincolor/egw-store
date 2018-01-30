@@ -1,0 +1,121 @@
+
+
+<div class="clearfix" id="customer">  
+  <div class="seven columns offset-by-four">
+
+   
+      <!-- Create Customer -->
+      <div id="create-customer" style="max-width:90%">
+        <h2 class="customer-title main-title">{% if page.url contains '?checkout' %}Step 1: Create Account{% else %}Create Account{% endif %}</h2>
+          <br class="clear" />
+        {% form 'create_customer' %}
+          {{ form.errors | default_errors }}
+
+          <div id="first_name" class="clearfix large_form">
+            <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" placeholder="First Name" />
+          </div>
+
+          <div id="last_name" class="clearfix large_form">
+           
+            <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" placeholder="Last Name" />
+          </div>
+
+          <div id="email" class="clearfix large_form">
+            
+            <input type="email" value="" name="customer[email]" id="email" class="large" size="30"  placeholder="Email" />
+          </div>
+
+          <div id="password" class="clearfix large_form">
+            <span class="information-icon"><span class="icon-inner"><i class="fa fa-question-circle"></i></span>
+            <div class="general-tooltip">
+    <div class="tooltip-inner">
+      Minimum of 5 characters needed for a valid password.
+    </div>
+  </div>
+            
+            </span>
+            <input type="password" value="" name="customer[password]" id="passwordFirst" class="large password" size="30"  placeholder="Password*" />
+        <input type="password" value="" name="customer[password_confirmation]" id="passwordConfirm"  placeholder="Confirm password*"  onchange="checkPasswordMatch();"/>
+        <span class="password-match" style="display:none;margin-bottom:10px;">Passwords do not match</span>   
+          </div>
+
+          <div class="action_bottom">
+            <input class="btn action_button disabled-btn" id="registerBtn" disabled type="submit" value="{{ 'customer.register.sign_up' | t }}" />
+            
+          </div>
+
+        {% endform %}
+        <div id="login_form">
+      <p class="customer-title account-create">Already a customer? <a href="/account/login" class="login-link">Click here</a></p>
+
+    
+    
+       
+    
+    </div>
+      </div><!-- /#create-customer -->
+   
+  </div>
+  
+  
+  
+    
+
+  </div>
+</div>
+
+<script type="text/javascript">
+  function showRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'block';
+    document.getElementById('login_form').style.display='none';
+    return false;
+  }
+
+  function hideRecoverPasswordForm() {
+    document.getElementById('recover-password').style.display = 'none';
+    document.getElementById('login_form').style.display = 'block';
+    return false;
+  }
+
+  if (window.location.hash == '#recover') { showRecoverPasswordForm() }
+
+  // reset_success is only true when the reset form is
+  {% if reset_success %}
+    showRecoverPasswordForm();
+  {% endif %}
+  $(document).ready(function () {
+    if(window.location.href.indexOf("checkout_url") > -1) {
+      $('#create-customer .customer-title.main-title').addClass('for-checkout');
+      $('#create-customer .customer-title.main-title').text('<b>New Customer:</b> Enter your information below');
+      $('#create-customer form').prepend('<input type="hidden" name="return_to" value="/checkout" />');
+      //$('#login_form .customer-title').text('<b>Returning Customer:</b> Click below to login');
+      $('#login_form form').prepend('<input type="hidden" name="return_to" value="/checkout" />');
+      var url= window.location.href;
+	  url = url.split('?')[1];
+      var _href = $('#login_form .login-link').attr('href');
+      $('#login_form .login-link').attr('href', _href + '?' + url);
+      
+    }
+    
+    function checkPasswordMatch() {
+        var password = $("#passwordFirst").val();
+        var confirmPassword = $("#passwordConfirm").val();
+        if (password != confirmPassword) {
+          $('.password-match').fadeIn("slow");
+          $('#registerBtn').addClass('disabled-btn');
+          $('#registerBtn').prop('disabled' , true);
+        }  else {
+          $('.password-match').fadeOut("slow");
+          $('#registerBtn').removeClass('disabled-btn');
+          $('#registerBtn').prop('disabled' , false);
+        }
+      }
+
+      $(document).ready(function () {
+        $("#passwordFirst, #passwordConfirm").keyup(checkPasswordMatch);
+      });
+
+    
+    
+});
+</script>

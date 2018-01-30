@@ -1,0 +1,46 @@
+{% if customer %}
+  {% if customer.orders.size != 0 %}
+    {% capture order_items %}{% for order in customer.orders %}{% for line_item in order.line_items %}{% for tag in line_item.product.tags %}{% if tag contains 'Program: ' %}{{ tag | split: 'Program: ' | last }}{% endif %}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endfor %}{% endfor %}{% endcapture %}
+
+  {% else %}
+
+  {% endif %}
+{% else %} 
+
+{% endif %}
+<div style="display:none">
+  {% for order in customer.orders %}
+        {% for line_item in order.line_items %}
+			{{ line_item.title }}
+        {% endfor %}
+      {% endfor %}
+</div>
+{% if customer %}
+  
+  {% if customer.orders.size != 0 %}
+  
+      {% if template contains 'collection' %}
+	  {% assign has_access = false %}
+	  {% assign program_name = collection.title | split: ' | ' | first | remove: ',' %}
+        {% if order_items contains collection.title or order_items contains program_name %}
+        	{% assign has_access = true %}
+        {% endif %}
+      {% endif %}
+      
+  {% endif %}
+{% endif %}
+{% comment %}
+  The contents of the collection.liquid template can be found in /sections/collection-template.liquid
+{% endcomment %}
+{% if has_access or customer.tags contains 'ALL ACCESS' %}
+{% section 'collection-calendar-template' %}
+{% if handle contains 'little-black-dress' %}
+{% section 'lbd-main-bottom-promotions' %}
+{% elsif handle contains '28-day' %}
+{% section 'bottom-featured-promotions' %}
+{% else %}
+{% section 'grye-bottom-promotions' %}
+{% endif %}
+{% else %}
+{% include 'access-check' %}
+{% endif %}

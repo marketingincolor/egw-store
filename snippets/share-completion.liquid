@@ -1,0 +1,53 @@
+<div class="share-completion">
+  <p>Share your progress with your friends!</p>
+  
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.11';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+  <div class="fb-share-button" data-href="" data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fshop.myevergreenwellness.com%2Fcollections%2Fall-programs&amp;src=sdkpreparse">Share on Facebook</a></div>
+  <a href="https://twitter.com/intent/tweet?text={{ title | truncate: 30 | url_escape }}&url={{ current_url }}{%- if twitter_name != blank -%}&via={{ twitter_name }}{%- endif -%}" target="_blank" class="icon-twitter" style="max-width: 73px;
+    margin: 10px auto;" title="{{ 'layout.social_sharing.twitter_title' | t }}">
+  Share
+  </a>
+
+</div>
+
+<script>
+/* Function Returns Program URL OG IMG */
+$(document).ready(function($) {
+  function getOgImage() {
+    var url = window.location.href;
+    var button = $(".fb-share-button");
+
+    // Tests
+    console.log("The URL is: " + url);
+    console.log(button);
+    console.log('Starting get OG Image Function..');
+
+    // If LBD Program
+    if( url.includes('little-black-dress')) {
+      console.log('Using LBD OG Image...');
+      // return "https://shop.myevergreenwellness.com/products/little-black-dress";
+      button.attr('data-href', 'https://shop.myevergreenwellness.com/products/little-black-dress');
+    }
+    // If GRYE Program
+    if( url.includes('gentlemen-restart-your-engines')) {
+      console.log('Using GRYE OG Image...');
+      // return "https://shop.myevergreenwellness.com/products/gentlemen-restart-your-engines";
+      button.attr('data-href', 'https://shop.myevergreenwellness.com/products/gentlemen-restart-your-engines');
+    }
+    // If 28 Day
+    if( url.includes('28-day-size-down-challenge')) {
+      console.log('Using 28 Day OG Image...');
+      // return "https://shop.myevergreenwellness.com/products/28-day-size-down-challenge";
+      button.attr('data-href', 'https://shop.myevergreenwellness.com/products/28-day-size-down-challenge');
+    }
+  }
+
+});
+</script>

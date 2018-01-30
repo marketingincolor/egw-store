@@ -1,0 +1,99 @@
+{% if customer %}
+  {% if customer.orders.size != 0 %}
+    {% capture order_items %}{% for order in customer.orders %}{% for line_item in order.line_items %}{% for tag in line_item.product.tags %}{% if tag contains 'Program: ' %}{{ tag | split: 'Program: ' | last }}{% endif %}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endfor %}{% endfor %}{% endcapture %}
+
+  {% else %}
+
+  {% endif %}
+{% else %} 
+
+{% endif %}
+
+{% if customer %}
+  
+  {% if customer.orders.size != 0 %}
+  
+	  {% assign has_access = false %}
+	  {% assign page_title = page.title | split: ' | ' | first | remove: ','%}
+        {% if order_items contains page_title %}
+        	{% assign has_access = true %}
+        {% endif %}
+    
+      
+  {% endif %}
+{% endif %}
+
+
+
+</div>
+{% if has_access or customer.tags contains 'ALL ACCESS' %}
+<div class="hero-banner hero--size-down-challenge {% if handle contains 'little-black' %}hero--lbd{% endif %} {% if handle contains 'gentlemen-restart' %}hero--grye{% endif %}">
+  <div class="hero-caption container">
+  {% if handle contains 'little-black' %}
+    <img src="{{ 'lbd-logo.svg' | asset_url }}" class="hero-icon" />
+    {% elsif handle contains '28-day' %}
+  <img src="{{ '28-day-icon.png' | asset_url }}" class="hero-icon" />
+    {% else %}
+    <img src="{{ 'grye-icon.png' | asset_url }}" class="hero-icon" />
+    {% endif %}
+</div>
+</div>
+<div class="day-navigation">
+  {% include 'day-navigation-bar' %}
+</div>
+<div id="customer">
+  <div class="container">
+<div class="sixteen columns clearfix collection_nav">
+  <h1 class="collection_title">
+    Self-Reflections
+  </h1>
+</div>
+<div class="sixteen columns clearfix collection_nav">
+  
+</div>
+
+<div class="sixteen columns page">
+  <div class="day-card">
+    <div class="card-header">
+    <h2 class="collection_title">
+    {{ page.title | split: ' | ' | last  | remove: '28-Day Size Down Challenge' | remove: 'Grocery List' |  remove: 'Self-Reflection' }}
+  </h2>
+  <a href="{{ page.metafields.c_f.weekly_self_reflection }}" class="video-btn" target="_blank">Download Worksheet</a> 
+      {% if handle contains '28-day' %}
+      {% assign program_collection = '28-day-size-down-challenge-self-reflections' %}
+    <select class="week-selector">
+      <option selected disabled>CHOOSE A WEEK</option>
+      {% for link in linklists[program_collection].links %}
+      <option value="{{ link.url }}">{{ link.title | split: '| ' | last }}</option>
+      {% endfor %}
+    </select>
+      {% elsif handle contains 'little-black' %}
+       {% assign program_collection = 'little-black-dress-self-reflections' %}
+    <select class="week-selector">
+      <option selected disabled>CHOOSE A WEEK</option>
+      {% for link in linklists[program_collection].links %}
+      <option value="{{ link.url }}">{{ link.title | split: '| ' | last }}</option>
+      {% endfor %}
+    </select>
+      {% else %}
+      {% assign program_collection = 'gentlemen-restart-your-engines-self-reflections' %}
+    <select class="week-selector">
+      <option selected disabled>CHOOSE A WEEK</option>
+      {% for link in linklists[program_collection].links %}
+      <option value="{{ link.url }}">{{ link.title | split: '| ' | last }}</option>
+      {% endfor %}
+    </select>
+      {% endif %}
+    </div>
+    <div class="card-content">
+  {% include 'page-multi-column', content: page.content %}
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+
+<div class="container">
+{% else %}
+{% include 'access-check' %}
+{% endif %}
